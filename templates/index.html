@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Chatbot</title>
+    <style>
+      body { font-family: Arial, sans-serif; max-width:720px; margin:2rem auto; padding:1rem; }
+      .chatbox { border:1px solid #ddd; padding:1rem; border-radius:6px; }
+      .message { margin:0.5rem 0; }
+      .user { color: #0a5; }
+      .bot { color: #06f; }
+      form { margin-top:1rem; }
+      input[type=text] { width:80%; padding:0.5rem; }
+      input[type=submit] { padding:0.5rem 0.8rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Simple Rule-Based Chatbot</h1>
+
+    <div class="chatbox">
+      {% if user_message %}
+        <div class="message user"><strong>You:</strong> {{ user_message }}</div>
+        <div class="message bot"><strong>Bot:</strong> {{ bot_reply }}</div>
+      {% else %}
+        <div class="message bot"><strong>Bot:</strong> Hello — type a message below and press Send.</div>
+      {% endif %}
+    </div>
+
+    <form method="post" action="/">
+      <input type="text" name="message" placeholder="Say something..." required autofocus>
+      <input type="submit" value="Send">
+    </form>
+  </body>
+ </html>
