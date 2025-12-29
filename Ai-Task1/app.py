@@ -5,14 +5,18 @@ app = Flask(__name__)
 
 
 def get_response(message: str) -> str:
-    """Very simple rule-based replies based on keywords.
-
-    Keep this function short and easy to read for beginners.
-    """
     if not message:
         return "Please say something so I can help."
 
     text = message.lower()
+
+    # how are you
+    if "how are you" in text:
+        return "I'm good! How are you?"
+
+    # joke
+    if "joke" in text or "tell me a joke" in text:
+        return "A guy walks into a bar and orders a glass of water. Haha!"
 
     # greetings
     if any(g in text for g in ("hi", "hello", "hey")):
@@ -24,7 +28,7 @@ def get_response(message: str) -> str:
 
     # help
     if "help" in text or "commands" in text:
-        return "Try typing: 'hi', 'weather', 'help', or 'bye'."
+        return "Try typing: hi, how are you, joke, weather, help, or bye."
 
     # goodbye
     if any(w in text for w in ("bye", "goodbye", "see ya", "exit")):
