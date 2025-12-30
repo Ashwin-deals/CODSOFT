@@ -1,7 +1,11 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
+
+
+# In-memory chat history: list of (speaker, text) tuples
+chat_history = []
 
 
 def get_response(message: str) -> str:
@@ -45,9 +49,25 @@ def index():
 
     if request.method == "POST":
         user_message = request.form.get("message", "").strip()
+        # special fetch token: return existing history without recording or replying
+        if user_message == "__fetch_history__":
+            return jsonify({"history": chat_history})
+
         bot_reply = get_response(user_message)
+        # store messages in history
+        chat_history.append(("user", user_message))
+        chat_history.append(("bot", bot_reply))
+        # return JSON response including full chat history
+        return jsonify({"history": chat_history})
 
     return render_template("index.html", user_message=user_message, bot_reply=bot_reply)
+
+
+@app.route("/reset", methods=["GET", "POST"])
+def reset():
+    """Clear the in-memory chat history and return a success message."""
+    chat_history.clear()
+    return jsonify({"success": True, "message": "Chat history cleared."})
 
 
 if __name__ == "__main__":

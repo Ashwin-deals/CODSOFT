@@ -1,35 +1,117 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simple Chatbot</title>
-    <style>
-      body { font-family: Arial, sans-serif; max-width:720px; margin:2rem auto; padding:1rem; }
-      .chatbox { border:1px solid #ddd; padding:1rem; border-radius:6px; }
-      .message { margin:0.5rem 0; }
-      .user { color: #0a5; }
-      .bot { color: #06f; }
-      form { margin-top:1rem; }
-      input[type=text] { width:80%; padding:0.5rem; }
-      input[type=submit] { padding:0.5rem 0.8rem; }
-    </style>
-  </head>
-  <body>
-    <h1>Simple Rule-Based Chatbot</h1>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple Chatbot</title>
 
-    <div class="chatbox">
-      {% if user_message %}
-        <div class="message user"><strong>You:</strong> {{ user_message }}</div>
-        <div class="message bot"><strong>Bot:</strong> {{ bot_reply }}</div>
-      {% else %}
-        <div class="message bot"><strong>Bot:</strong> Hello — type a message below and press Send. You can type 'help' to see available commands.</div>
-      {% endif %}
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  <div class="main-container">
+    <h1>Simple Chatbot</h1>
+
+    <div class="chatbox" id="chatbox" aria-live="polite">
+      <!-- Messages rendered here -->
     </div>
 
-    <form method="post" action="/">
-      <input type="text" name="message" placeholder="Say something..." required autofocus>
+    <form id="chat-form" method="post" action="/">
+      <input type="text" id="message-input" name="message" placeholder="Type a message..." required autofocus>
       <input type="submit" value="Send">
+      <button type="button" id="reset-btn">Reset</button>
     </form>
-  </body>
- </html>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById('chatbox');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('message-input');
+    const resetBtn = document.getElementById('reset-btn');
+
+    function escapeHtml(s){
+      return s.replace(/[&<>\"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":"&#39;"}[c];
+      });
+    }
+
+    function renderHistory(history){
+      chatbox.innerHTML = '';
+      if(!history || history.length === 0){
+        const welcome = document.createElement('div');
+        welcome.className = 'message bot';
+        welcome.innerHTML = '<strong>Bot</strong> Hello! I am your assistant. Type a message to start.';
+        chatbox.appendChild(welcome);
+        return;
+      }
+
+      for(const [speaker, text] of history){
+        const m = document.createElement('div');
+        m.className = 'message ' + (speaker === 'user' ? 'user' : 'bot');
+        const label = speaker === 'user' ? 'You' : 'Bot';
+        m.innerHTML = `<strong>${label}</strong> ${escapeHtml(text)}`;
+        chatbox.appendChild(m);
+      }
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    async function sendMessage(message){
+      const formData = new URLSearchParams();
+      formData.append('message', message);
+
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString()
+      });
+
+      if(res.ok){
+        const j = await res.json();
+        if(j.history) renderHistory(j.history);
+      }
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const text = input.value.trim();
+      if(!text) return;
+      sendMessage(text).then(()=>{
+        input.value = '';
+        input.focus();
+      });
+    });
+
+    resetBtn.addEventListener('click', async function(){
+      const res = await fetch('/reset', { method: 'POST' });
+      if(res.ok){
+        renderHistory([]);
+      }
+    });
+
+    // Fetch chat history on load
+    (async function fetchOnLoad(){
+      try{
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ message: '__fetch_history__' }).toString()
+        });
+        if(res.ok){
+          const j = await res.json();
+          if(j.history) renderHistory(j.history);
+          return;
+        }
+      }catch(err){ }
+      renderHistory([]);
+    })();
+  </script>
+
+</body>
+</html>
