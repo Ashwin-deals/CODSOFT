@@ -1,1 +1,29 @@
 Ai-Task1/venv/
+
+# Ignore ALL virtual environments (any project)
+venv/
+env/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# SQLite DB (optional — remove if you WANT to commit DB)
+*.sqlite3
+
+# Django collected static
+staticfiles/
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
