@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <!-- External CSS link as required -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        :root {
+            --bg-color: #f7f9fc;
+            --text-color: #2c3e50;
+            --accent-color: #3498db;
+            --secondary-color: #95a5a6;
+            --board-bg: #ffffff;
+            --cell-border: #ecf0f1;
+            --x-color: #e74c3c;
+            --o-color: #f1c40f;
+            --win-color: #2ecc71;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* Scoreboard */
+        .scoreboard {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            background: var(--board-bg);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Difficulty Selector */
+        .controls-top {
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--cell-border);
+            background: var(--board-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
+            box-shadow: var(--shadow);
+            appearance: none;
+            /* simple cleaner look */
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232c3e50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px top 50%;
+            background-size: 10px auto;
+            padding-right: 40px;
+        }
+
+        /* Turn Indicator */
+        .turn-indicator {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            min-height: 1.5em;
+            color: var(--accent-color);
+        }
+
+        /* Board */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .cell {
+            background: var(--board-bg);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, background-color 0.2s;
+            user-select: none;
+        }
+
+        .cell:hover:not(.filled) {
+            transform: scale(1.05);
+            background-color: #fafafa;
+        }
+
+        .cell.filled {
+            cursor: default;
+        }
+
+        .cell.x {
+            color: var(--x-color);
+        }
+
+        .cell.o {
+            color: var(--o-color);
+        }
+
+        .cell.winner {
+            background-color: var(--win-color);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* AI Message */
+        #ai-message {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            font-style: italic;
+            min-height: 1.5em;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Buttons */
+        .game-buttons {
+            display: flex;
+            gap: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>TIC TAC TOE</h1>
+
+    <div class="scoreboard">
+        <div class="score-item">
+            <span class="score-label">You (X)</span>
+            <span class="score-value" id="score-x">0</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">Draw</span>
+            <span class="score-value" id="score-draw">0</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">AI (O)</span>
+            <span class="score-value" id="score-o">0</span>
+        </div>
+    </div>
+
+    <div class="controls-top">
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard" selected>Hard</option>
+        </select>
+    </div>
+
+    <div class="turn-indicator" id="turn-indicator">Your turn</div>
+
+    <div id="ai-message"></div>
+
+    <div class="board" id="board">
+        <!-- 9 cells generated by loop or manual -->
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+
+    <div class="game-buttons">
+        <button id="restart-btn">Restart Game</button>
+        <button id="reset-scores-btn" class="secondary">Reset Scores</button>
+    </div>
+
+    <!-- External JS link (Logic moved here) -->
+    <script src="{% static 'js/game.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,349 @@
+/* Modern Tic Tac Toe Variables */
+:root {
+    /* HSL Colors for easier manipulation */
+    --hue-primary: 210;
+    /* Blue */
+    --hue-accent: 340;
+    /* Reddish for X */
+    --hue-secondary: 45;
+    /* Yellowish for O */
+
+    --color-bg: hsl(var(--hue-primary), 20%, 96%);
+    --color-text: hsl(var(--hue-primary), 20%, 20%);
+    --color-text-light: hsl(var(--hue-primary), 10%, 60%);
+
+    --color-board: #ffffff;
+    --color-board-shadow: rgba(0, 0, 0, 0.08);
+
+    --color-x: hsl(var(--hue-accent), 70%, 55%);
+    --color-o: hsl(var(--hue-secondary), 90%, 50%);
+
+    --color-button: hsl(var(--hue-primary), 70%, 50%);
+    --color-button-hover: hsl(var(--hue-primary), 70%, 45%);
+
+    --color-win-bg: hsl(150, 60%, 45%);
+    --color-win-text: #ffffff;
+
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 8px;
+
+    --shadow-lg: 0 10px 25px -5px var(--color-board-shadow), 0 8px 10px -6px var(--color-board-shadow);
+    --shadow-md: 0 4px 6px -1px var(--color-board-shadow), 0 2px 4px -2px var(--color-board-shadow);
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+h1 {
+    font-weight: 800;
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, var(--color-text) 0%, var(--color-button) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Scoreboard */
+.scoreboard {
+    display: flex;
+    background: var(--color-board);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    gap: 2rem;
+    width: 100%;
+    max-width: 400px;
+    justify-content: space-around;
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.score-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-light);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.score-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Controls (Difficulty) */
+.controls-top {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+select {
+    appearance: none;
+    background-color: var(--color-board);
+    border: 2px solid transparent;
+    padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+}
+
+select:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--color-button);
+}
+
+/* Turn Indicator */
+.turn-indicator {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+    min-height: 1.6em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.turn-indicator::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-button);
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+}
+
+/* Board */
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 12px;
+    margin-bottom: 2rem;
+    padding: 12px;
+    background-color: var(--color-board);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.board.disabled .cell {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.cell {
+    background-color: var(--color-bg);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.cell:hover:not(.filled) {
+    background-color: #f1f5f9;
+    transform: scale(0.98);
+}
+
+.cell.filled {
+    cursor: default;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transform: scale(1);
+    /* Ensure resetting scale */
+}
+
+/* Animation for appearances */
+.cell.x,
+.cell.o {
+    animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.cell.x {
+    color: var(--color-x);
+    text-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+}
+
+.cell.o {
+    color: var(--color-o);
+    text-shadow: 0 4px 12px rgba(241, 196, 15, 0.2);
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Winner Highlight */
+.cell.winner {
+    background-color: var(--color-win-bg) !important;
+    color: var(--color-win-text) !important;
+    text-shadow: none;
+    animation: win-pulse 1s infinite alternate;
+}
+
+@keyframes win-pulse {
+    from {
+        box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+    }
+
+    to {
+        box-shadow: 0 0 20px rgba(46, 204, 113, 0.8);
+    }
+}
+
+/* Buttons */
+.game-buttons {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+button {
+    flex: 1;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--color-button);
+    color: white;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover {
+    background-color: var(--color-button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button.secondary {
+    background-color: transparent;
+    color: var(--color-text-light);
+    box-shadow: inset 0 0 0 2px #e2e8f0;
+}
+
+button.secondary:hover {
+    background-color: #e2e8f0;
+    color: var(--color-text);
+    box-shadow: inset 0 0 0 2px #cbd5e1;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .scoreboard {
+        padding: 0.75rem 1rem;
+        gap: 1rem;
+    }
+
+    .score-value {
+        font-size: 1.25rem;
+    }
+
+    .board {
+        grid-template-columns: repeat(3, 80px);
+        grid-template-rows: repeat(3, 80px);
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .cell {
+        font-size: 2.5rem;
+    }
+
+    .game-buttons {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
