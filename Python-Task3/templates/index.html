@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Google Fonts for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Password Generator</h1>
+        </header>
+
+        <div class="display-container">
+            <input type="text" id="password-display" placeholder="Your Password" readonly>
+            <button id="copy-btn" aria-label="Copy Password">
+                Copy
+            </button>
+        </div>
+
+        <div class="controls">
+            <div class="length-control">
+                <label for="length-slider">Password Length: <span id="length-val">12</span></label>
+                <input type="range" id="length-slider" min="4" max="32" value="12">
+            </div>
+
+            <div class="options">
+                <div class="option">
+                    <input type="checkbox" id="uppercase" checked>
+                    <label for="uppercase">Uppercase</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="lowercase" checked>
+                    <label for="lowercase">Lowercase</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="numbers" checked>
+                    <label for="numbers">Numbers</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="symbols" checked>
+                    <label for="symbols">Symbols</label>
+                </div>
+            </div>
+
+            <div id="error-message" class="error-msg"></div>
+
+            <button id="generate-btn">Generate Password</button>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
