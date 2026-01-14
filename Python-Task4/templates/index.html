@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Rock Paper Scissors</h1>
+            <p class="instructions">Choose one to play</p>
+        </header>
+
+        <main class="game-area">
+            <div class="result-panel" id="result-panel">
+                <div class="choice user">
+                    <span class="label">You</span>
+                    <span class="emoji" id="user-choice">❔</span>
+                </div>
+                <div class="result-message" id="result-message">Let's Play!</div>
+                <div class="choice computer">
+                    <span class="label">Computer</span>
+                    <span class="emoji" id="computer-choice">❔</span>
+                </div>
+            </div>
+
+            <div class="buttons-container">
+                <button class="choice-btn" data-choice="rock" aria-label="Rock">🪨</button>
+                <button class="choice-btn" data-choice="paper" aria-label="Paper">📄</button>
+                <button class="choice-btn" data-choice="scissors" aria-label="Scissors">✂️</button>
+            </div>
+
+            <button id="play-again-btn" class="play-again" style="display: none;">Play Again</button>
+        </main>
+
+        <section class="scoreboard">
+            <div class="score-item">
+                <span class="score-label">User</span>
+                <span class="score-value" id="user-score">0</span>
+            </div>
+            <div class="score-item">
+                <span class="score-label">Draws</span>
+                <span class="score-value" id="draws-score">0</span>
+            </div>
+            <div class="score-item">
+                <span class="score-label">Computer</span>
+                <span class="score-value" id="computer-score">0</span>
+            </div>
+        </section>
+
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <button id="resetBtn"
+                style="background-color: #ecf0f1; border: none; padding: 8px 16px; border-radius: 20px; color: #7f8c8d; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s;">Reset
+                Score</button>
+        </div>
+
+        <section class="history-section">
+            <h3>Round History</h3>
+            <ul id="round-history-list">
+                <!-- Javascript will populate this -->
+            </ul>
+        </section>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
