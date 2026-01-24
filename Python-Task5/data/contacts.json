@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "ashwin",
+    "phone": "8122767503",
+    "email": "ashwin@gmail.com",
+    "address": "ashwin",
+    "favorite": false,
+    "created_at": "2026-01-24T13:55:53.718837Z"
+  },
+  {
+    "id": 2,
+    "name": "Jonathan",
+    "phone": "9177767503",
+    "email": "jonathan@email",
+    "address": "Jonathan house",
+    "favorite": false,
+    "created_at": "2026-01-24T17:40:17.899505Z"
+  }
+]

@@ -1,0 +1,419 @@
+:root {
+    --primary: #4f46e5;
+    /* Indigo 600 */
+    --primary-dark: #4338ca;
+    /* Indigo 700 */
+    --accent: #f59e0b;
+    /* Amber 500 (Favorites) */
+    --danger: #ef4444;
+    /* Red 500 */
+    --bg-body: #f3f4f6;
+    /* Gray 100 */
+    --bg-card: #ffffff;
+    --text-head: #111827;
+    /* Gray 900 */
+    --text-body: #374151;
+    /* Gray 700 */
+    --text-muted: #9ca3af;
+    /* Gray 400 */
+    --border: #e5e7eb;
+    /* Gray 200 */
+    --radius: 12px;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-body);
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* --- Main Container (The Soft Card) --- */
+.app-container {
+    width: 100%;
+    max-width: 1000px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    padding: 0;
+}
+
+/* --- Header --- */
+.main-header {
+    background: var(--bg-card);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-head);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.main-header i {
+    color: var(--primary);
+}
+
+/* --- Content Wrapper --- */
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* --- Left Panel: Form --- */
+.form-panel {
+    flex: 1 1 400px;
+    padding: 2rem;
+    border-right: 1px solid var(--border);
+    background-color: #fafafa;
+    /* Slight contrast for form area */
+}
+
+.card-header h2 {
+    font-size: 1.25rem;
+    color: var(--text-head);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+#contactForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group:nth-child(4) {
+    /* Address field usually */
+    grid-column: 1 / -1;
+    /* Stretch across both columns */
+}
+
+/* Make Name/Phone span 1 col each, Email span 2 cols? */
+/* Adjusting based on standard 4 fields order: Name, Phone, Email, Address */
+/* Let's make Email full width too for cleaner look, or side-by-side with something else if user wants */
+/* User asked: "Align the form neatly in two columns on desktop" */
+
+.form-group:nth-child(3) {
+    /* Email */
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-body);
+}
+
+input,
+textarea {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.validation-message {
+    grid-column: 1 / -1;
+    min-height: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: -0.5rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    grid-column: 1 / -1;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* --- Right Panel: List --- */
+.list-panel {
+    flex: 1 1 500px;
+    padding: 2rem;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 800px;
+    /* Scrollable list area if needed */
+    overflow-y: auto;
+}
+
+/* Toolbar */
+.toolbar {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+}
+
+.search-bar {
+    position: relative;
+    flex: 1;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.search-bar input {
+    width: 100%;
+    padding-left: 36px;
+    border-radius: 100px;
+    /* Pill shape */
+    background: var(--bg-body);
+    border-color: transparent;
+}
+
+.search-bar input:focus {
+    background: white;
+    border-color: var(--primary);
+}
+
+.sort-controls select {
+    padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background-color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-body);
+}
+
+/* Contacts List */
+.contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Items */
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    gap: 1rem;
+}
+
+.contact-item:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.contact-item.favorite {
+    background: #fffbeb;
+    /* Amber 50 */
+    border-color: #fcd34d;
+    /* Amber 300 */
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-body);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.contact-item.favorite .avatar {
+    background: #fde68a;
+    /* Amber 200 */
+    color: #b45309;
+    /* Amber 700 */
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+    /* Text truncation fix */
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-head);
+    margin-bottom: 0.25rem;
+}
+
+.phone,
+.email {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email {
+    display: none;
+}
+
+/* Hide email in list to keep it clean, or show on desktop only if space? */
+/* User asked for "Name, Phone below" specifically in list */
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.btn-icon:hover {
+    background: var(--bg-body);
+    color: var(--text-head);
+}
+
+.fav-btn.active {
+    color: var(--accent);
+}
+
+.delete-btn:hover {
+    background: #fef2f2;
+    color: var(--danger);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+}
+
+.empty-illustration {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .form-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #contactForm {
+        grid-template-columns: 1fr;
+        /* 1 column on mobile */
+    }
+
+    .form-group:nth-child(n) {
+        grid-column: auto;
+    }
+
+    .contact-item {
+        flex-wrap: wrap;
+        /* Allow wrapping if needed */
+    }
+}

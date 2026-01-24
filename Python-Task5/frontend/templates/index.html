@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Book</title>
+
+    <!-- Fonts: Inter for a clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header class="main-header">
+            <h1><i class="fa-solid fa-address-book"></i> Contact Book</h1>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Left Panel: Contact Form -->
+            <aside class="form-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Contact Details</h2>
+                    </div>
+                    <form id="contactForm" novalidate>
+                        <input type="hidden" id="contactId" name="id">
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="e.g. Alex Johnson" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" placeholder="e.g. +1 (555) 000-0000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="e.g. alex@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" name="address" rows="3"
+                                placeholder="Enter physical address..."></textarea>
+                        </div>
+
+                        <!-- Validation Message Area -->
+                        <div id="validationMessage" class="validation-message" aria-live="polite"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Contact
+                        </button>
+                    </form>
+                </div>
+            </aside>
+
+            <!-- Right Panel: Contact List & Controls -->
+            <main class="list-panel">
+                <!-- Toolbar: Search & Sort -->
+                <div class="toolbar">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search by name or phone...">
+                    </div>
+
+                    <div class="sort-controls">
+                        <label for="sortSelect">Sort by:</label>
+                        <select id="sortSelect" class="form-select">
+                            <option value="az">A–Z</option>
+                            <option value="recently_added">Recently Added</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Contacts List Container -->
+                <div id="contactsList" class="contacts-list">
+                    <!-- Empty State -->
+                    <div id="emptyState" class="empty-state">
+                        <div class="empty-illustration">
+                            <i class="fa-regular fa-address-card"></i>
+                        </div>
+                        <h3>No contacts yet</h3>
+                        <p>Add your first one!</p>
+                    </div>
+
+                    <!-- Dynamic contact items will be injected here by JS. 
+                         Example structure for reference:
+                    <div class="contact-item">
+                        <div class="avatar">A</div>
+                        <div class="info">
+                            <h4 class="name">Alex Johnson</h4>
+                            <p class="phone">+1 (555) 000-0000</p>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-icon fav-btn"><i class="fa-regular fa-star"></i></button>
+                            <button class="btn-icon edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn-icon delete-btn"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Custom Script -->
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
