@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Signup Flow</title>
+    <!-- Placeholder for external styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Screen 1: Welcome -->
+    <section id="welcome-screen" class="screen full-screen active">
+        <div class="content-center">
+            <div class="logo-area">
+                <img src="assets/logo.png" alt="App Logo" id="app-logo" class="logo">
+                <h1 id="app-name">Spark</h1>
+                <p id="app-tagline">Ignite your productivity</p>
+            </div>
+
+            <div class="action-area">
+                <button type="button" id="btn-get-started" class="btn btn-primary">Get Started</button>
+
+                <div class="divider">or</div>
+
+                <button type="button" id="btn-google-signup" class="btn btn-secondary">
+                    <span class="icon">G</span> Continue with Google
+                </button>
+
+                <p class="login-link">
+                    Already have an account? <a href="#" id="link-login">Log In</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 2: Name & Email -->
+    <section id="name-email-screen" class="screen full-screen hidden">
+        <header class="screen-header">
+            <button type="button" id="btn-back-name" class="btn-icon back-btn">
+                <span class="sr-only">Back</span>
+                &larr;
+            </button>
+            <div class="step-indicator">Step 1 of 4</div>
+        </header>
+
+        <div class="content-body">
+            <h2>Let's meet</h2>
+            <p class="subtitle">We just need a few details to get you started.</p>
+
+            <form id="form-name-email">
+                <div class="form-group">
+                    <label for="input-name">Full Name</label>
+                    <input type="text" id="input-name" name="name" placeholder="e.g. Alex Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="input-email">Email Address</label>
+                    <input type="email" id="input-email" name="email" placeholder="name@example.com" required>
+                </div>
+            </form>
+        </div>
+
+        <footer class="screen-footer">
+            <button type="button" id="btn-next-name" class="btn btn-primary full-width">Next</button>
+        </footer>
+    </section>
+
+    <!-- Screen 3: Password -->
+    <section id="password-screen" class="screen full-screen hidden">
+        <header class="screen-header">
+            <button type="button" id="btn-back-pass" class="btn-icon back-btn">
+                <span class="sr-only">Back</span>
+                &larr;
+            </button>
+            <div class="step-indicator">Step 2 of 4</div>
+        </header>
+
+        <div class="content-body">
+            <h2>Secure your account</h2>
+            <p class="subtitle">Create a strong password.</p>
+
+            <form id="form-password">
+                <div class="form-group">
+                    <label for="input-password">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="input-password" name="password" placeholder="••••••••" required>
+                        <button type="button" id="btn-toggle-pass" class="btn-icon input-action"
+                            aria-label="Toggle password visibility">
+                            👁️
+                        </button>
+                    </div>
+
+                    <div class="password-strength" id="strength-bar-container">
+                        <div id="strength-bar" class="strength-bar" data-strength="0"></div>
+                        <span id="strength-text">Weak</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <footer class="screen-footer">
+            <button type="button" id="btn-next-pass" class="btn btn-primary full-width">Next</button>
+        </footer>
+    </section>
+
+    <!-- Screen 4: OTP -->
+    <section id="otp-screen" class="screen full-screen hidden">
+        <header class="screen-header">
+            <button type="button" id="btn-back-otp" class="btn-icon back-btn">
+                <span class="sr-only">Back</span>
+                &larr;
+            </button>
+            <div class="step-indicator">Step 3 of 4</div>
+        </header>
+
+        <div class="content-body">
+            <h2>Verify it's you</h2>
+            <p class="subtitle">We sent a code to your email. Enter it below.</p>
+
+            <form id="form-otp" class="otp-container">
+                <input type="text" id="otp-1" class="otp-input" maxlength="1" inputmode="numeric" aria-label="Digit 1">
+                <input type="text" id="otp-2" class="otp-input" maxlength="1" inputmode="numeric" aria-label="Digit 2">
+                <input type="text" id="otp-3" class="otp-input" maxlength="1" inputmode="numeric" aria-label="Digit 3">
+                <input type="text" id="otp-4" class="otp-input" maxlength="1" inputmode="numeric" aria-label="Digit 4">
+            </form>
+
+            <div class="timer-area">
+                <p>Resend code in <span id="otp-timer">00:30</span></p>
+                <button type="button" id="btn-resend" class="btn-link" disabled>Resend Code</button>
+            </div>
+        </div>
+
+        <footer class="screen-footer">
+            <button type="button" id="btn-verify" class="btn btn-primary full-width">Verify</button>
+        </footer>
+    </section>
+
+    <!-- Screen 5: Personalization -->
+    <section id="personalization-screen" class="screen full-screen hidden">
+        <header class="screen-header">
+            <!-- No back button here, forcing forward momentum or logic handling -->
+            <div class="step-indicator">Step 4 of 4</div>
+        </header>
+
+        <div class="content-body">
+            <h2>What are you into?</h2>
+            <p class="subtitle">Pick a few interests to customize your feed.</p>
+
+            <div class="interests-grid" id="interests-container" role="group" aria-label="Select interests">
+                <button type="button" id="interest-fitness" class="interest-card" aria-pressed="false">
+                    <span class="emoji">💪</span>
+                    <span class="label">Fitness</span>
+                </button>
+
+                <button type="button" id="interest-study" class="interest-card" aria-pressed="false">
+                    <span class="emoji">📚</span>
+                    <span class="label">Study</span>
+                </button>
+
+                <button type="button" id="interest-finance" class="interest-card" aria-pressed="false">
+                    <span class="emoji">💰</span>
+                    <span class="label">Finance</span>
+                </button>
+
+                <button type="button" id="interest-music" class="interest-card" aria-pressed="false">
+                    <span class="emoji">🎵</span>
+                    <span class="label">Music</span>
+                </button>
+
+                <button type="button" id="interest-travel" class="interest-card" aria-pressed="false">
+                    <span class="emoji">✈️</span>
+                    <span class="label">Travel</span>
+                </button>
+
+                <button type="button" id="interest-tech" class="interest-card" aria-pressed="false">
+                    <span class="emoji">💻</span>
+                    <span class="label">Tech</span>
+                </button>
+            </div>
+        </div>
+
+        <footer class="screen-footer">
+            <button type="button" id="btn-continue-interests" class="btn btn-primary full-width">Continue</button>
+        </footer>
+    </section>
+
+    <!-- Screen 6: Success -->
+    <section id="success-screen" class="screen full-screen hidden">
+        <div class="content-center">
+            <div class="illustration-placeholder" id="success-illustration" aria-hidden="true">
+                🎉
+            </div>
+
+            <h2>You're all set!</h2>
+            <p>Your account has been created successfully.</p>
+
+            <button type="button" id="btn-dashboard" class="btn btn-primary full-width">Go to Dashboard</button>
+        </div>
+    </section>
+
+    <!-- Logic script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

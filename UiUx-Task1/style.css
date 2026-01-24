@@ -1,0 +1,394 @@
+:root {
+    --primary: #FF4B6E;
+    /* Vibrant Pink/Red for "Spark" */
+    --primary-dark: #E63558;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --bg-body: #F9FAFB;
+    --bg-card: #FFFFFF;
+    --border: #E5E7EB;
+    --input-bg: #F3F4F6;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden;
+    /* Prevent scrolling outside the phone view */
+    display: flex;
+    justify-content: center;
+}
+
+/* --- Screen Container --- */
+body {
+    /* Simulate mobile view on desktop if wide */
+    max-width: 450px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Screen Management */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(20px);
+    transition: var(--transition);
+    z-index: 1;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    z-index: 10;
+}
+
+.screen.hidden {
+    /* Kept for logic, but CSS .active overrides */
+}
+
+/* --- Headers & Footers --- */
+.screen-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.step-indicator {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.screen-footer {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+/* --- Typography --- */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0.5rem 0;
+}
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+/* --- Buttons --- */
+.btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 75, 110, 0.3);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    margin-top: 1rem;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* --- Forms --- */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+input {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid transparent;
+    background-color: var(--input-bg);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+input:focus {
+    outline: none;
+    background-color: white;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 75, 110, 0.1);
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-action {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+/* --- Screen 1: Welcome --- */
+#welcome-screen .content-center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo-area {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+    /* Placeholder style if image missing */
+    background: var(--primary);
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.divider {
+    text-align: center;
+    color: var(--text-muted);
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.login-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* --- Screen 3: Password --- */
+.password-strength {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 4px;
+    background-color: var(--input-bg);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.strength-bar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s, background-color 0.3s;
+}
+
+/* Strength States (handled below via JS or mocked here) */
+.strength-bar[data-strength="1"]::after {
+    width: 33%;
+    background-color: #EF4444;
+}
+
+.strength-bar[data-strength="2"]::after {
+    width: 66%;
+    background-color: #F59E0B;
+}
+
+.strength-bar[data-strength="3"]::after {
+    width: 100%;
+    background-color: #10B981;
+}
+
+/* --- Screen 4: OTP --- */
+.otp-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.otp-input {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 0;
+}
+
+.timer-area {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* --- Screen 5: Personalization --- */
+.interests-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.interest-card {
+    background: white;
+    border: 2px solid var(--input-bg);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.interest-card:hover {
+    border-color: var(--primary);
+    background-color: rgba(255, 75, 110, 0.02);
+}
+
+.interest-card[aria-pressed="true"] {
+    border-color: var(--primary);
+    background-color: rgba(255, 75, 110, 0.1);
+}
+
+.interest-card .emoji {
+    font-size: 2rem;
+}
+
+.interest-card .label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* --- Screen 6: Success --- */
+#success-screen .content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+.illustration-placeholder {
+    font-size: 6rem;
+    margin-bottom: 2rem;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
