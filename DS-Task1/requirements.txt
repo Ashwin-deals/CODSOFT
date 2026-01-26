@@ -1,0 +1,7 @@
+# Libraries required for Titanic Survival Prediction project
+pandas
+numpy
+scikit-learn
+seaborn
+matplotlib
+
