@@ -128,20 +128,21 @@ if __name__ == "__main__":
         cleaned_csv = Path(os.path.join(os.path.dirname(__file__), "..", "data", "processed", "cleaned_titanic.csv")).resolve()
         if cleaned_csv.exists():
             df_clean = pd.read_csv(cleaned_csv)
+            # Drop identifier columns that were removed during training
+            df_clean = df_clean.drop(columns=["PassengerId"], errors="ignore")
             feature_cols = df_clean.drop(columns=["Survived"]).select_dtypes(include=[np.number]).columns.tolist()
 
-            # Create sample with default zeros and set known values
-            sample = pd.Series(0, index=feature_cols, dtype=float)
-            if "Age" in sample.index:
-                sample["Age"] = 22
-            if "Sex" in sample.index:
-                # male encoded as 0 in cleaning step
-                sample["Sex"] = 0
-            if "Pclass" in sample.index:
-                sample["Pclass"] = 3
+            # Build a single-row DataFrame with the same columns/order as training features
+            sample_vals = {c: 0 for c in feature_cols}
+            if "Age" in sample_vals:
+                sample_vals["Age"] = 22
+            if "Sex" in sample_vals:
+                sample_vals["Sex"] = 0
+            if "Pclass" in sample_vals:
+                sample_vals["Pclass"] = 3
 
-            sample_array = sample.values.reshape(1, -1)
-            pred = loaded.predict(sample_array)
+            sample_df = pd.DataFrame([sample_vals], columns=feature_cols)
+            pred = loaded.predict(sample_df)
             print("Predicted survival for sample (22yo male, 3rd class):", int(pred[0]))
         else:
             print(f"Cleaned CSV not found for building sample: {cleaned_csv}")

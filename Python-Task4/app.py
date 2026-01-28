@@ -50,7 +50,6 @@ def play():
         'draws': draws
     })
 
-
 @app.route('/reset', methods=['POST'])
 def reset():
     global user_score, computer_score, draws
@@ -62,7 +61,6 @@ def reset():
         'computer_score': computer_score,
         'draws': draws
     })
-
 
 if __name__ == '__main__':
     app.run(debug=True)
