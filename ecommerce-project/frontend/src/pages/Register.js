@@ -12,7 +12,7 @@ function Register() {
     setError("");
 
     try {
-      const res = await fetch("http://127.0.0.1:8001/api/register/", {
+      const res = await fetch("https://codsoft-j0yg.onrender.com/api/register/"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

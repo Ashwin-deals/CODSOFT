@@ -5,7 +5,7 @@ function Home({ search, category }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8001/api/products/")
+    fetch("https://codsoft-j0yg.onrender.com/api/products/")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
