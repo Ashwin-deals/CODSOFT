@@ -20,12 +20,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-
-    # API routes
-    path("api/", include("users.urls")),
-    path("api/products/", include("products.urls")),
+    path('admin/', admin.site.urls),
+    path('api/', include('users.urls')),
+    path('api/products/', include('products.urls')),
 ]
 
-# Serve media files (product images) in development & on Render
+# ALWAYS serve media
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
