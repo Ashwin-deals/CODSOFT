@@ -8,12 +8,17 @@ const API_BASE =
 
 function Home({ search, category }) {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/products/`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
       .then((data) => setProducts(data))
-      .catch(() => setProducts([]));
+      .catch(() => setProducts([]))
+      .finally(() => setLoading(false));
   }, []);
 
   const filtered = products.filter((p) => {
@@ -29,7 +34,9 @@ function Home({ search, category }) {
 
   return (
     <div style={{ padding: "24px", background: "#f5f7fa", minHeight: "100vh" }}>
-      {filtered.length === 0 ? (
+      {loading ? (
+        <p style={{ color: "#6b7280", fontSize: "16px" }}>Loading...</p>
+      ) : filtered.length === 0 ? (
         <p style={{ color: "#6b7280", fontSize: "16px" }}>
           Product not available.
         </p>
