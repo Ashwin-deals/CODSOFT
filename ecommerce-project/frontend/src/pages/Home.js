@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
+const API_BASE =
+  process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:8001"
+    : "https://codsoft-j0yg.onrender.com";
+
 function Home({ search, category }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("https://codsoft-j0yg.onrender.com/api/products/")
+    fetch(`${API_BASE}/api/products/`)
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => setProducts(data))
+      .catch(() => setProducts([]));
   }, []);
 
   const filtered = products.filter((p) => {

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_BASE =
+  process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:8001"
+    : "https://codsoft-j0yg.onrender.com";
+
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +17,7 @@ function Register() {
     setError("");
 
     try {
-      const res = await fetch("https://codsoft-j0yg.onrender.com/api/register/", {
+      const res = await fetch(`${API_BASE}/api/register/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
